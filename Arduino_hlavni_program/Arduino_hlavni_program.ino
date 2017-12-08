@@ -8,6 +8,10 @@ float R1= 1000;
 float R2= 0;
 float buffer= 0;
 
+unsigned int samplingTime = 280;
+unsigned int deltaTime = 40;
+unsigned int sleepTime = 9680;
+
 #define typeDHT DHT22
 #define DHT11_PIN 2
 DHT dht(DHT11_PIN, typeDHT);
@@ -29,9 +33,9 @@ void loop()
     buffer= (Vin/Vout) -1;
     R2= R1 * buffer;
     
-    Serial.print("Vout: ");
-    Serial.print(Vout);
-    Serial.println();
+  //  Serial.print("Vout: ");
+  //  Serial.print(Vout);
+  //  Serial.println();
     
     Serial.print("R2: ");
     Serial.print(R2);
@@ -50,5 +54,7 @@ void loop()
   Serial.print("Humidity = ");
   Serial.println(humid);
   }
-  delay(1000);
+
+  
+  delay(3000);
 }
