@@ -7,3 +7,6 @@ C:\Users\Marek\Documents\GitHub\SPSCV_hack2017_projekt\Aplikace\hackaton_app\hac
 C:\Users\Marek\Documents\GitHub\SPSCV_hack2017_projekt\Aplikace\hackaton_app\hackaton_app\bin\Debug\hackaton_app.pdb
 C:\Users\Marek\Documents\GitHub\SPSCV_hack2017_projekt\Aplikace\hackaton_app\hackaton_app\obj\Debug\hackaton_app.exe
 C:\Users\Marek\Documents\GitHub\SPSCV_hack2017_projekt\Aplikace\hackaton_app\hackaton_app\obj\Debug\hackaton_app.pdb
+C:\Users\Dangel\Documents\Hack2017\SPSCV_hack2017_projekt\Aplikace\hackaton_app\hackaton_app\bin\Debug\hackaton_app.exe.config
+C:\Users\Dangel\Documents\Hack2017\SPSCV_hack2017_projekt\Aplikace\hackaton_app\hackaton_app\obj\Debug\hackaton_app.exe
+C:\Users\Dangel\Documents\Hack2017\SPSCV_hack2017_projekt\Aplikace\hackaton_app\hackaton_app\obj\Debug\hackaton_app.pdb

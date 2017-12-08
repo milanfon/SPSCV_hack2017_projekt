@@ -12,6 +12,10 @@ namespace hackaton_app
 {
     public partial class Form1 : Form
     {
+        private float Naplneni;
+        private float Vlhkost;
+        private float Teplota;
+
         public Form1()
         {
             InitializeComponent();
@@ -77,6 +81,10 @@ namespace hackaton_app
         private void Form1_Load(object sender, EventArgs e) //Spuštění
         {
             stavNádržeToolStripMenuItem_Click(null,null);
+
+            Naplneni = 0;
+            Vlhkost = 0;
+            Teplota = 0;
         }
 
         private void počasíToolStripMenuItem_Click(object sender, EventArgs e)
@@ -101,13 +109,13 @@ namespace hackaton_app
             button_odcerpani.Visible = false;
             button_zavlazeni.Visible = false;
 
-            float vlhkost = 0.55f; //SEM PROMĚNÁ URČUJÍCÍ VLHKOST
+            float harryhoSestra = 0.55f; //JSEM PROMĚNÁ URČUJÍCÍ VLHKOST
             float teplota = -5f; //SEM PROMĚNOU TEPLOTY
 
             teplota_cislo.Text = teplota.ToString() + "°C";
-            vlhkost_cislo.Text = (vlhkost * 100).ToString() + "%";
+            vlhkost_cislo.Text = (harryhoSestra * 100).ToString() + "%";
 
-            if (vlhkost > 0.51)
+            if (harryhoSestra > 0.51)
             {
                  if (teplota < 0) snih.Visible = true;
                  else dest.Visible = true;
