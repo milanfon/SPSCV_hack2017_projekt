@@ -28,9 +28,10 @@ namespace hackaton_app
             dest.Visible=false;
             snih.Visible=false;
             zavlazeni.Visible = false;
-            button_zavlazit.Visible = false;
             pojistka.Visible = false;
             button_odcerpani.Visible = false;
+            button_manualnizavlazeni.Visible=false;
+            button_zavlazeni.Visible = false;
 
             float stav_nadrze  = 0f; //SEM VLOŽIT PROMĚNOU, JEŽ URČUJE HLADINU VODY
             obsah.Visible = true;
@@ -93,6 +94,12 @@ namespace hackaton_app
             slunce.Visible=false;
             dest.Visible=false;
             snih.Visible=false;
+            zavlazeni.Visible = false;
+            pojistka.Visible = false;
+            button_odcerpani.Visible = false;
+            button_manualnizavlazeni.Visible = false;
+            button_odcerpani.Visible = false;
+            button_zavlazeni.Visible = false;
 
             float vlhkost = 0.55f; //SEM PROMĚNÁ URČUJÍCÍ VLHKOST
             float teplota = -5f; //SEM PROMĚNOU TEPLOTY
@@ -111,7 +118,7 @@ namespace hackaton_app
 
         private void zavlažováníToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            button_zavlazeni.Visible = true;
             vlhost_napis.Visible = false;
             vlhkost_cislo.Visible = false;
             teplota_napis.Visible = false;
@@ -125,32 +132,21 @@ namespace hackaton_app
             nadoba_plna.Visible = false;
             nadoba_ctvrt.Visible = false;
             obsah.Visible = false;
+            pojistka.Visible = false;
+            button_odcerpani.Visible = false;
 
             zavlazovani_lehke.Checked = true;
             zavlazeni.Visible = true;
-            button_zavlazit.Visible = true;
-
-
+            button_manualnizavlazeni.Visible = true;
+           
+        
         }
 
-        private void button_zavlazit_Click(object sender, EventArgs e)
-        {
-            if(zavlazovani_lehke.Checked)
-            {
-                //Proveď fce
-            }
-            else if (zavlazovani_stredni.Checked)
-            {
-                //Proveď fce
-            }
-            else if(zavlazovani_silne.Checked)
-            {
-                //Proveď fce
-            }
-        }
+       
 
         private void očerpáníToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            button_zavlazeni.Visible = false;
             vlhost_napis.Visible = false;
             vlhkost_cislo.Visible = false;
             teplota_napis.Visible = false;
@@ -159,7 +155,6 @@ namespace hackaton_app
             dest.Visible = false;
             snih.Visible = false;
             zavlazeni.Visible = false;
-            button_zavlazit.Visible = false;
             nadoba_prazdna.Visible = false;
             nadoba_polovina.Visible = false;
             nadoba_trictvrte.Visible = false;
@@ -167,7 +162,8 @@ namespace hackaton_app
             nadoba_ctvrt.Visible = false;
             obsah.Visible = false;
             pojistka.Visible = true;
-
+            button_manualnizavlazeni.Visible = false;
+            button_odcerpani.Visible = false;
 
         }
 
@@ -182,6 +178,31 @@ namespace hackaton_app
             if (dr == DialogResult.OK)
             {
                 //Fce odčerpání
+            }
+        }
+
+        private void button_zavlazeni_Click(object sender, EventArgs e)
+        {
+            if (zavlazovani_lehke.Checked)
+            {
+                //Proveď fce
+            }
+            else if (zavlazovani_stredni.Checked)
+            {
+                //Proveď fce
+            }
+            else if (zavlazovani_silne.Checked)
+            {
+                //Proveď fce
+            }
+        }
+
+        private void konecToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Chcete opravdu ukončit ?", "Upozornění", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (dr == DialogResult.OK)
+            {
+                Close();
             }
         }
     }
