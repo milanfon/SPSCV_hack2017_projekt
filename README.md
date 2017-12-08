@@ -1,2 +1,2 @@
-# Akumulace dešťové vody
-## Projekt skupiny SPŠ a Voš Chomutov
+## Akumulace dešťové vody
+### Projekt skupiny SPŠ a Voš Chomutov
