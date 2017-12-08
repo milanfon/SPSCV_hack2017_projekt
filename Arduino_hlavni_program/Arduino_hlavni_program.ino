@@ -61,7 +61,7 @@ void loop()
   {Serial.println("víc jak půl");}
    else if (digitalRead(ctvrt) == HIGH)
   {Serial.println("Víc jak 1/4");}
-     else if (digitalRead(empty) == HIGH)
+   else if (digitalRead(empty) == HIGH)
   {Serial.println("Víc jak 0");}
   else {Serial.println("prázdná");}
   
