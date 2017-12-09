@@ -1,3 +1,4 @@
+#include <DHT22_430.h>
 #include <WiFi.h>
 #include <SPI.h>
 
@@ -22,10 +23,12 @@ void setup() {
   Serial.begin(115200);
   WiFi.begin(ssid, pass);
   pinMode(LED, OUTPUT);
+  pinMode(38, OUTPUT);
 }
 
 void loop() {
   digitalWrite(LED, HIGH);
+  digitalWrite(38, HIGH);
 
   if (client.available())
   {

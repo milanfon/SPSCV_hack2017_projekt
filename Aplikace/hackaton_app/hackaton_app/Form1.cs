@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,6 +21,8 @@ namespace hackaton_app
         private float Naplneni;
         private float Vlhkost;
         private float Teplota;
+
+        SerialPort sp = new SerialPort("COM4", 9600);
 
         public Form1()
         {
@@ -92,7 +95,8 @@ namespace hackaton_app
             Teplota = 0;
             Odpor = 0;
 
-            UpdateThingSpeak();
+            //UpdateThingSpeak();
+            ReadFromArduino();
 
             stavNádržeToolStripMenuItem_Click(null, null);
         }
@@ -224,6 +228,19 @@ namespace hackaton_app
             }
         }
 
+        private void ReadFromArduino()
+        {
+            sp.Open();
+            string input = sp.ReadLine();
+
+            string[] warray = input.Split(',');
+            float[] farray = Array.ConvertAll(warray, float.Parse);
+            this.Odpor = farray[0];
+            this.Teplota = farray[1];
+            this.Vlhkost = farray[2];
+            this.Naplneni = farray[3];
+        }
+
         private void UpdateThingSpeak()
         {
             this.Odpor = getFromTS(1);
@@ -254,7 +271,8 @@ namespace hackaton_app
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            UpdateThingSpeak();
+            //UpdateThingSpeak();
+            ReadFromArduino();
         }
     }
 }
