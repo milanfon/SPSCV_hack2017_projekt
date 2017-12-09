@@ -31,7 +31,8 @@ namespace hackaton_app
 
         private void stavNádržeToolStripMenuItem_Click(object sender, EventArgs e) //Kolonka ,,Stav nádrže"
         {
-           
+            ReadFromArduino();
+
             vlhost_napis.Visible = false;
             vlhkost_cislo.Visible = false;
             teplota_napis.Visible = false;
@@ -103,6 +104,8 @@ namespace hackaton_app
 
         private void počasíToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ReadFromArduino();
+
             nadoba_prazdna.Visible = false;
             nadoba_polovina.Visible = false;
             nadoba_trictvrte.Visible = false;
@@ -241,6 +244,8 @@ namespace hackaton_app
             this.Teplota = float.Parse(warray[1]);
             this.Vlhkost = float.Parse(warray[2]);
             this.Naplneni = float.Parse(warray[3]);
+
+            sp.Close();
         }
 
         private void UpdateThingSpeak()
