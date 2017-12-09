@@ -1,8 +1,22 @@
+#include <DHT.h>
 #include <WiFi.h>
 #include <SPI.h>
 
-char ssid[] = "Milanfon Mobile Network";
-char pass[] = "justforme";
+int analogPin = 23;
+int raw = 0;
+float Vin = 3.3F;
+int empty = 28;
+int ctvrt = 27;
+int pul = 26;
+int trictvrt = 25;
+int full = 24;
+float Vout = 0;
+float R1 = 1000;
+float R2 = 0;
+float buffer = 0;
+
+char ssid[] = "hackathon";
+char pass[] = "att4hack";
 IPAddress hostIp(184, 106, 153, 149);
 String writeAPIKey = "AG9NU2DHLD00YR80";
 const int updateThingSpeakInterval = 5 * 1000;
@@ -11,19 +25,63 @@ boolean lastConnected = false;
 int failedCounter = 0;
 WiFiClient client;
 
-String a = String(22);
-String b = String(69);
+float Resistance = 0;
+float Humidity = 0;
+float Temperature = 0;
+float Naplneni = 0;
 
 #define LED RED_LED
+#define DHTPIN 38
+#define DHTTYPE DHT22
+
+DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
   Serial.begin(115200);
   WiFi.begin(ssid, pass);
+  dht.begin();
+
   pinMode(LED, OUTPUT);
+  pinMode(38, INPUT);
 }
 
 void loop() {
+  // Porovnávačka
+  raw = analogRead(analogPin);
+  if (raw)
+  {
+    buffer = raw * Vin;
+    Vout = (buffer)/1024.0;
+    buffer = (Vin/Vout) - 1;
+    R2 = R1 * buffer;
+
+    Resistance = R2;
+  }
+
+  // Humidity
+  Temperature = dht.readTemperature();
+  Humidity = dht.readHumidity();
+
+  if(isnan(Temperature) || isnan(Humidity)) {
+    Temperature = 0;
+    Humidity = 0;
+  }
+
+  // Naplneni
+  if (digitalRead(full)  == HIGH)
+  {Naplneni = 100;}
+   else if (digitalRead(trictvrt) == HIGH)
+  {Naplneni = 75;}
+   else if (digitalRead(pul) == HIGH)
+  {Naplneni = 50;}
+   else if (digitalRead(ctvrt) == HIGH)
+  {Naplneni = 25;}
+   else if (digitalRead(empty) == HIGH)
+  {Naplneni = 0;}
+
+  // WiFi
   digitalWrite(LED, HIGH);
+  digitalWrite(38, HIGH);
 
   if (client.available())
   {
@@ -42,7 +100,7 @@ void loop() {
   // Update ThingSpeak
   if (!client.connected() && (millis() - lastConnectionTime > updateThingSpeakInterval))
   {
-    updateThingSpeak("field1=" + a + "&field2=" + b);
+    updateThingSpeak("field1=" + String(Resistance) + "&field2=" + String(Temperature) + "&field3=" + String(Humidity) + "&field4=" + String(Naplneni));
   }
 
   // Check if WiFi needs to be restarted

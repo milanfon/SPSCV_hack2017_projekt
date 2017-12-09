@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.stavNádržeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.počasíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zavlažováníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.očerpáníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.konecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nadoba_plna = new System.Windows.Forms.PictureBox();
             this.nadoba_trictvrte = new System.Windows.Forms.PictureBox();
             this.nadoba_polovina = new System.Windows.Forms.PictureBox();
@@ -53,11 +55,11 @@
             this.zavlazeni = new System.Windows.Forms.GroupBox();
             this.button_odcerpani = new System.Windows.Forms.Button();
             this.pojistka = new System.Windows.Forms.GroupBox();
-            this.button_pojistka = new System.Windows.Forms.Button();
             this.check_jistota = new System.Windows.Forms.CheckBox();
+            this.button_pojistka = new System.Windows.Forms.Button();
             this.button_manualnizavlazeni = new System.Windows.Forms.Button();
             this.button_zavlazeni = new System.Windows.Forms.Button();
-            this.konecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nadoba_plna)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nadoba_trictvrte)).BeginInit();
@@ -118,6 +120,14 @@
             this.očerpáníToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
             this.očerpáníToolStripMenuItem.Text = "Odčerpání";
             this.očerpáníToolStripMenuItem.Click += new System.EventHandler(this.očerpáníToolStripMenuItem_Click);
+            // 
+            // konecToolStripMenuItem
+            // 
+            this.konecToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.konecToolStripMenuItem.Name = "konecToolStripMenuItem";
+            this.konecToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.konecToolStripMenuItem.Text = "Konec";
+            this.konecToolStripMenuItem.Click += new System.EventHandler(this.konecToolStripMenuItem_Click);
             // 
             // nadoba_plna
             // 
@@ -338,6 +348,16 @@
             this.pojistka.TabIndex = 20;
             this.pojistka.TabStop = false;
             // 
+            // check_jistota
+            // 
+            this.check_jistota.AutoSize = true;
+            this.check_jistota.Location = new System.Drawing.Point(6, 13);
+            this.check_jistota.Name = "check_jistota";
+            this.check_jistota.Size = new System.Drawing.Size(255, 17);
+            this.check_jistota.TabIndex = 1;
+            this.check_jistota.Text = "Jste si jistí, že chcete odčerpat veškerou vodu ?";
+            this.check_jistota.UseVisualStyleBackColor = true;
+            // 
             // button_pojistka
             // 
             this.button_pojistka.BackColor = System.Drawing.Color.DimGray;
@@ -348,16 +368,6 @@
             this.button_pojistka.Text = "Potvrdit";
             this.button_pojistka.UseVisualStyleBackColor = false;
             this.button_pojistka.Click += new System.EventHandler(this.button_pojistka_Click);
-            // 
-            // check_jistota
-            // 
-            this.check_jistota.AutoSize = true;
-            this.check_jistota.Location = new System.Drawing.Point(6, 13);
-            this.check_jistota.Name = "check_jistota";
-            this.check_jistota.Size = new System.Drawing.Size(255, 17);
-            this.check_jistota.TabIndex = 1;
-            this.check_jistota.Text = "Jste si jistí, že chcete odčerpat veškerou vodu ?";
-            this.check_jistota.UseVisualStyleBackColor = true;
             // 
             // button_manualnizavlazeni
             // 
@@ -384,13 +394,10 @@
             this.button_zavlazeni.UseVisualStyleBackColor = false;
             this.button_zavlazeni.Click += new System.EventHandler(this.button_zavlazeni_Click);
             // 
-            // konecToolStripMenuItem
+            // timer1
             // 
-            this.konecToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.konecToolStripMenuItem.Name = "konecToolStripMenuItem";
-            this.konecToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.konecToolStripMenuItem.Text = "Konec";
-            this.konecToolStripMenuItem.Click += new System.EventHandler(this.konecToolStripMenuItem_Click);
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -471,6 +478,7 @@
         private System.Windows.Forms.Button button_manualnizavlazeni;
         private System.Windows.Forms.Button button_zavlazeni;
         private System.Windows.Forms.ToolStripMenuItem konecToolStripMenuItem;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
