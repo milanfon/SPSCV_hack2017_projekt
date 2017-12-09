@@ -21,6 +21,7 @@ namespace hackaton_app
         private float Naplneni;
         private float Vlhkost;
         private float Teplota;
+        private bool WiFi = false;
 
         SerialPort sp = new SerialPort("COM7", 9600);
 
@@ -31,7 +32,7 @@ namespace hackaton_app
 
         private void stavNádržeToolStripMenuItem_Click(object sender, EventArgs e) //Kolonka ,,Stav nádrže"
         {
-            ReadFromArduino();
+            ConnectToModule();
 
             vlhost_napis.Visible = false;
             vlhkost_cislo.Visible = false;
@@ -96,15 +97,14 @@ namespace hackaton_app
             Teplota = 0;
             Odpor = 0;
 
-            //UpdateThingSpeak();
-            ReadFromArduino();
+            ConnectToModule();
 
             stavNádržeToolStripMenuItem_Click(null, null);
         }
 
         private void počasíToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReadFromArduino();
+            ConnectToModule();
 
             nadoba_prazdna.Visible = false;
             nadoba_polovina.Visible = false;
@@ -278,8 +278,19 @@ namespace hackaton_app
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //UpdateThingSpeak();
-            ReadFromArduino();
+            ConnectToModule();
+        }
+
+        private void ConnectToModule()
+        {
+            if (WiFi)
+            {
+                UpdateThingSpeak();
+            }
+            else
+            {
+                ReadFromArduino();
+            }
         }
     }
 }
