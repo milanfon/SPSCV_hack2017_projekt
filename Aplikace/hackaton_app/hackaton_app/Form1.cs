@@ -22,7 +22,7 @@ namespace hackaton_app
         private float Vlhkost;
         private float Teplota;
 
-        SerialPort sp = new SerialPort("COM4", 9600);
+        SerialPort sp = new SerialPort("COM7", 9600);
 
         public Form1()
         {
@@ -232,13 +232,15 @@ namespace hackaton_app
         {
             sp.Open();
             string input = sp.ReadLine();
-
-            string[] warray = input.Split(',');
-            float[] farray = Array.ConvertAll(warray, float.Parse);
-            this.Odpor = farray[0];
-            this.Teplota = farray[1];
-            this.Vlhkost = farray[2];
-            this.Naplneni = farray[3];
+            input = input.Replace("\r", string.Empty);
+            input = input.Replace(",", ";");
+            input = input.Replace(".", ",");
+            string[] warray = input.Split(';');
+            
+            this.Odpor = float.Parse(warray[0]);
+            this.Teplota = float.Parse(warray[1]);
+            this.Vlhkost = float.Parse(warray[2]);
+            this.Naplneni = float.Parse(warray[3]);
         }
 
         private void UpdateThingSpeak()

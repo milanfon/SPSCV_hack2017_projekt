@@ -29,6 +29,7 @@ void setup()
 
 void loop()
 {
+  String s = "";
    // Ohmovka
     raw= analogRead(analogPin);
   if(raw) 
@@ -43,11 +44,9 @@ void loop()
   //  Serial.println();
     
   //  Serial.print("R2: ");
-    Serial.println(); 
-    Serial.print(R2);
+    s += R2;
    }
-   else {   
-    Serial.println();}
+  
   
 
 //Tady nahradit Serial Výstupy za přenos dat přes Wifi do programu  
@@ -58,27 +57,29 @@ void loop()
   float temp = dht.readTemperature();
   float humid = dht.readHumidity();
   if(isnan(temp) || isnan(humid)) {
-    Serial.print(",");
+    s += ",0,0";
   }
     else{
   //Serial.print("Temperature = ");
-  Serial.print(",");
-  Serial.print(temp);
+  s += ",";
+  s += temp;
   //Serial.print("Humidity = ");
-  Serial.print(",");
-  Serial.print(humid);
+  s += ",";
+  s += humid;
   }
   if (digitalRead(full)  == HIGH)
-  {Serial.print("100");}
+  {s += ",100";}
    else if (digitalRead(trictvrt) == HIGH)
-  {Serial.print(",75");}
+  {s += ",75";}
    else if (digitalRead(pul) == HIGH)
-  {Serial.print(",50");}
+  {s += ",50";}
    else if (digitalRead(ctvrt) == HIGH)
-  {Serial.print(",25");}
+  {s += ",25";}
    else if (digitalRead(empty) == HIGH)
-  {Serial.print(",25");}
-   else {Serial.print(",0");}
+  {s += ",25";}
+   else {s += ",0";}
+
+   Serial.println(s);
   
-  delay(3000);
+  delay(300);
 }
