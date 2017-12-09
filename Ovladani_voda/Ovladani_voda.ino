@@ -15,8 +15,8 @@ float R1 = 1000;
 float R2 = 0;
 float buffer = 0;
 
-char ssid[] = "Milanfon Mobile Network";
-char pass[] = "justforme";
+char ssid[] = "hackathon";
+char pass[] = "att4hack";
 IPAddress hostIp(184, 106, 153, 149);
 String writeAPIKey = "AG9NU2DHLD00YR80";
 const int updateThingSpeakInterval = 5 * 1000;

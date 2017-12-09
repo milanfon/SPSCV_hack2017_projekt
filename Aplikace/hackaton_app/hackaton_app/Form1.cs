@@ -21,17 +21,19 @@ namespace hackaton_app
         private float Naplneni;
         private float Vlhkost;
         private float Teplota;
-        private bool WiFi = false;
+        private bool WiFi = true;
 
         SerialPort sp = new SerialPort("COM7", 9600);
 
         public Form1()
         {
             InitializeComponent();
+            
         }
 
         private void stavNádržeToolStripMenuItem_Click(object sender, EventArgs e) //Kolonka ,,Stav nádrže"
         {
+
             ConnectToModule();
 
             vlhost_napis.Visible = false;
@@ -90,6 +92,7 @@ namespace hackaton_app
 
         private void Form1_Load(object sender, EventArgs e) //Spuštění
         {
+
             stavNádržeToolStripMenuItem_Click(null,null);
 
             Naplneni = 0;
@@ -272,7 +275,7 @@ namespace hackaton_app
             Stream dataStream = ThingsSpeakResp.GetResponseStream();
             StreamReader reader = new StreamReader(dataStream);
             string strResponse = reader.ReadToEnd();
-
+            strResponse = strResponse.Replace(".", ",");
             return float.Parse(strResponse);
         }
 
