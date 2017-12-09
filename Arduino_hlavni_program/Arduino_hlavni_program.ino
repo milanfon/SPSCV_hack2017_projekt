@@ -27,12 +27,6 @@ void setup()
   dht.begin();
 }
 
-void ohmovka()
-{ 
-  
-  }
-
-
 void loop()
 {
    // Ohmovka
@@ -48,23 +42,15 @@ void loop()
   //  Serial.print(Vout);
   //  Serial.println();
     
-    Serial.print("R2: ");
+  //  Serial.print("R2: ");
+    Serial.println(); 
     Serial.print(R2);
-    Serial.println();
    }
+   else {   
+    Serial.println();}
   
-  if(digitalRead(full)  == HIGH)
-  {Serial.println("Plno");}
-  else if (digitalRead(trictvrt) == HIGH)
-  {Serial.println("víc jak 3/4");}
-   else if (digitalRead(pul) == HIGH)
-  {Serial.println("víc jak půl");}
-   else if (digitalRead(ctvrt) == HIGH)
-  {Serial.println("Víc jak 1/4");}
-   else if (digitalRead(empty) == HIGH)
-  {Serial.println("Víc jak 0");}
-  else {Serial.println("prázdná");}
-  
+
+//Tady nahradit Serial Výstupy za přenos dat přes Wifi do programu  
  
 
   
@@ -72,15 +58,27 @@ void loop()
   float temp = dht.readTemperature();
   float humid = dht.readHumidity();
   if(isnan(temp) || isnan(humid)) {
-    Serial.print("chyba při čtení");
+    Serial.print(",");
   }
     else{
-  Serial.print("Temperature = ");
-  Serial.println(temp);
-  Serial.print("Humidity = ");
-  Serial.println(humid);
+  //Serial.print("Temperature = ");
+  Serial.print(",");
+  Serial.print(temp);
+  //Serial.print("Humidity = ");
+  Serial.print(",");
+  Serial.print(humid);
   }
-
+  if (digitalRead(full)  == HIGH)
+  {Serial.print("100");}
+   else if (digitalRead(trictvrt) == HIGH)
+  {Serial.print(",75");}
+   else if (digitalRead(pul) == HIGH)
+  {Serial.print(",50");}
+   else if (digitalRead(ctvrt) == HIGH)
+  {Serial.print(",25");}
+   else if (digitalRead(empty) == HIGH)
+  {Serial.print(",25");}
+   else {Serial.print(",0");}
   
   delay(3000);
 }
