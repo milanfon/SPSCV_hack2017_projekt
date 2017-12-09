@@ -56,7 +56,6 @@ namespace hackaton_app
               nadoba_polovina.Visible=false;
               nadoba_trictvrte.Visible=false;
               nadoba_plna.Visible=true;
-                nadoba_prazdna.Visible = false;
               obsah.Text = (stav_nadrze).ToString()+"%";
              }
              if(stav_nadrze==75)
@@ -64,24 +63,21 @@ namespace hackaton_app
               nadoba_polovina.Visible=false;
               nadoba_trictvrte.Visible=true;
               nadoba_plna.Visible=false;
-                nadoba_prazdna.Visible = false;
-                obsah.Text = (stav_nadrze).ToString() + "%";
+              obsah.Text = (stav_nadrze).ToString() + "%";
              }
               if(stav_nadrze==50)
              {nadoba_ctvrt.Visible=false;
               nadoba_polovina.Visible=true;
               nadoba_trictvrte.Visible=false;
               nadoba_plna.Visible=false;
-                nadoba_prazdna.Visible = false;
-                obsah.Text = (stav_nadrze).ToString() + "%";
+              obsah.Text = (stav_nadrze).ToString() + "%";
              }
               if(stav_nadrze==25)
              {nadoba_ctvrt.Visible=true;
               nadoba_polovina.Visible=false;
               nadoba_trictvrte.Visible=false;
               nadoba_plna.Visible=false;
-                nadoba_prazdna.Visible = false;
-                obsah.Text = (stav_nadrze).ToString() + "%";
+              obsah.Text = (stav_nadrze).ToString() + "%";
              }
               if (stav_nadrze == 0)
               {
@@ -286,14 +282,6 @@ namespace hackaton_app
         private void timer1_Tick(object sender, EventArgs e)
         {
             ConnectToModule();
-            if(teplota_cislo.Visible==true)
-            {
-                počasíToolStripMenuItem_Click(null, null);
-            }
-            if(obsah.Visible==true)
-            {
-                stavNádržeToolStripMenuItem_Click(null, null);
-            }
         }
 
         private void ConnectToModule()
