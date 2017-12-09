@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSXML;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -139,7 +140,7 @@ namespace hackaton_app
             teplota_cislo.Text = teplota.ToString() + "°C";
             vlhkost_cislo.Text = (harryhoSestra ).ToString() + "%";
 
-            if (harryhoSestra > 0.51)
+            if (harryhoSestra > 50.01)
             {
                  if (teplota < 0) snih.Visible = true;
                  else dest.Visible = true;
@@ -209,7 +210,7 @@ namespace hackaton_app
             DialogResult dr = MessageBox.Show("Chcete opravdu odčerpat veškerou vodu do kanalizace ?", "Potvrzení", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (dr == DialogResult.OK)
             {
-                //Fce odčerpání
+                SendToTS(4);
             }
         }
 
@@ -217,15 +218,15 @@ namespace hackaton_app
         {
             if (zavlazovani_lehke.Checked)
             {
-                //Proveď fce
+                SendToTS(1);
             }
             else if (zavlazovani_stredni.Checked)
             {
-                //Proveď fce
+                SendToTS(2);
             }
             else if (zavlazovani_silne.Checked)
             {
-                //Proveď fce
+                SendToTS(3);
             }
         }
 
@@ -306,6 +307,16 @@ namespace hackaton_app
             {
                 ReadFromArduino();
             }
+        }
+
+        private void SendToTS(int input)
+        {
+            const string writeKEY = "AG9NU2DHLD00YR80";
+            var HttpAgent = new XMLHTTPRequest();
+            var URI = "http://api.thingspeak.com/update?key=" + writeKEY + "&field5=" + input;
+
+            HttpAgent.open("POST", URI);
+            HttpAgent.send();
         }
     }
 }
