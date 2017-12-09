@@ -35,7 +35,7 @@ namespace hackaton_app
         {
 
             ConnectToModule();
-
+            button_vypnuti.Visible = false;
             vlhost_napis.Visible = false;
             vlhkost_cislo.Visible = false;
             teplota_napis.Visible = false;
@@ -112,7 +112,7 @@ namespace hackaton_app
         private void počasíToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConnectToModule();
-
+            button_vypnuti.Visible = false;
             nadoba_prazdna.Visible = false;
             nadoba_polovina.Visible = false;
             nadoba_trictvrte.Visible = false;
@@ -139,7 +139,7 @@ namespace hackaton_app
             teplota_cislo.Text = teplota.ToString() + "°C";
             vlhkost_cislo.Text = (harryhoSestra ).ToString() + "%";
 
-            if (harryhoSestra > 0.51)
+            if (harryhoSestra > 50.01)
             {
                  if (teplota < 0) snih.Visible = true;
                  else dest.Visible = true;
@@ -150,6 +150,7 @@ namespace hackaton_app
 
         private void zavlažováníToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            button_vypnuti.Visible = true;
             button_zavlazeni.Visible = true;
             vlhost_napis.Visible = false;
             vlhkost_cislo.Visible = false;
@@ -178,6 +179,8 @@ namespace hackaton_app
 
         private void očerpáníToolStripMenuItem_Click(object sender, EventArgs e)
         {
+          
+            button_vypnuti.Visible = false;
             button_zavlazeni.Visible = false;
             vlhost_napis.Visible = false;
             vlhkost_cislo.Visible = false;
