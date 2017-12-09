@@ -175,11 +175,19 @@
             // 
             this.obsah.AutoSize = true;
             this.obsah.BackColor = System.Drawing.Color.Transparent;
+<<<<<<< HEAD
             this.obsah.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.obsah.ForeColor = System.Drawing.Color.White;
             this.obsah.Location = new System.Drawing.Point(298, 100);
             this.obsah.Name = "obsah";
             this.obsah.Size = new System.Drawing.Size(179, 73);
+=======
+            this.obsah.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.obsah.ForeColor = System.Drawing.Color.White;
+            this.obsah.Location = new System.Drawing.Point(120, 100);
+            this.obsah.Name = "obsah";
+            this.obsah.Size = new System.Drawing.Size(269, 108);
+>>>>>>> dd0f96a365be99cf7b97a0dcf54ba9add38b246e
             this.obsah.TabIndex = 5;
             this.obsah.Text = "-------";
             // 
@@ -382,7 +390,11 @@
             this.button_manualnizavlazeni.Name = "button_manualnizavlazeni";
             this.button_manualnizavlazeni.Size = new System.Drawing.Size(226, 62);
             this.button_manualnizavlazeni.TabIndex = 16;
+<<<<<<< HEAD
             this.button_manualnizavlazeni.Text = "Automatické zavlažování";
+=======
+            this.button_manualnizavlazeni.Text = "Automatizované zavlažení";
+>>>>>>> dd0f96a365be99cf7b97a0dcf54ba9add38b246e
             this.button_manualnizavlazeni.UseVisualStyleBackColor = false;
             // 
             // button_zavlazeni

@@ -29,11 +29,12 @@ float Resistance = 0;
 float Humidity = 0;
 float Temperature = 0;
 float Naplneni = 0;
+int CHANNEL_ID = 381221;
+String READ_KEY = "6123BHFJB7WJY5HC";
 
 #define LED RED_LED
 #define DHTPIN 38
 #define DHTTYPE DHT22
-#define CHANNEL_ID 381221
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -44,6 +45,11 @@ void setup() {
 
   pinMode(LED, OUTPUT);
   pinMode(38, INPUT);
+  pinMode(GREEN_LED, OUTPUT);
+  pinMode(17, OUTPUT);
+  pinMode(35, OUTPUT);
+  pinMode(36, OUTPUT);
+  pinMode(37, OUTPUT);
 }
 
 void loop() {
@@ -52,8 +58,8 @@ void loop() {
   if (raw)
   {
     buffer = raw * Vin;
-    Vout = (buffer)/1024.0;
-    buffer = (Vin/Vout) - 1;
+    Vout = (buffer) / 1024.0;
+    buffer = (Vin / Vout) - 1;
     R2 = R1 * buffer;
 
     Resistance = R2;
@@ -63,22 +69,32 @@ void loop() {
   Temperature = dht.readTemperature();
   Humidity = dht.readHumidity();
 
-  if(isnan(Temperature) || isnan(Humidity)) {
+  if (isnan(Temperature) || isnan(Humidity)) {
     Temperature = 0;
     Humidity = 0;
   }
 
   // Naplneni
   if (digitalRead(full)  == HIGH)
-  {Naplneni = 100;}
-   else if (digitalRead(trictvrt) == HIGH)
-  {Naplneni = 75;}
-   else if (digitalRead(pul) == HIGH)
-  {Naplneni = 50;}
-   else if (digitalRead(ctvrt) == HIGH)
-  {Naplneni = 25;}
-   else if (digitalRead(empty) == HIGH)
-  {Naplneni = 0;}
+  {
+    Naplneni = 100;
+  }
+  else if (digitalRead(trictvrt) == HIGH)
+  {
+    Naplneni = 75;
+  }
+  else if (digitalRead(pul) == HIGH)
+  {
+    Naplneni = 50;
+  }
+  else if (digitalRead(ctvrt) == HIGH)
+  {
+    Naplneni = 25;
+  }
+  else if (digitalRead(empty) == HIGH)
+  {
+    Naplneni = 0;
+  }
 
   // WiFi
   digitalWrite(LED, HIGH);
@@ -132,15 +148,42 @@ void updateThingSpeak(String tsData)
     client.print("\n\n");
     client.print(tsData);
 
-    client.print("GET /channels/" + CHANNEL_ID + "/feeds.json?api_key=<your API key>&results=2 HTTP/1.1");
+    client.print("GET /channels/");
+    client.print(CHANNEL_ID);
+    client.print("/field/5/last.txt?key=");
+    client.print(READ_KEY);
+    client.print(" HTTP/1.1");
     client.print("Host: api.thingspeak.com\n");
     client.print("Connection: close\n");
-    client.print("X-THINGSPEAKAPIKEY: " + writeAPIKey + "\n");
-    client.print("Content-Type: application/x-www-form-urlencoded\n");
-    client.print("Content-Length: ");
-    client.print(tsData.length());
-    client.print("\n\n");
-    client.print(tsData);
+
+    int val = 1;
+
+    while (client.available() == 0);  // wait till something comes in; you may want to add a timeout here
+
+    unsigned long lastRead = millis();  // keeps track of last time a byte was read
+    while (millis() - lastRead < 2000) {  // while 2 secs havent passed since a byte was read
+      while (client.available()) {
+        Serial.print(client.read());
+        lastRead = millis();   // update last time something was read
+      }
+    }
+
+    digitalWrite(17, LOW);
+    digitalWrite(35, LOW);
+    digitalWrite(36, LOW);
+    digitalWrite(37, LOW);
+
+    if (val == 0) {
+
+    } else if (val == 1) {
+      digitalWrite(17, HIGH);
+    } else if (val == 2) {
+      digitalWrite(35, HIGH);
+    } else if (val == 3) {
+      digitalWrite(36, HIGH);
+    } else if (val == 4) {
+      digitalWrite(37, HIGH);
+    }
 
     Serial.println("Updated!");
     failedCounter = 0;
