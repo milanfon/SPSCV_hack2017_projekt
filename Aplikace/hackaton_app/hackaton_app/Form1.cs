@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace hackaton_app
 {
@@ -38,35 +42,35 @@ namespace hackaton_app
             button_manualnizavlazeni.Visible=false;
             button_zavlazeni.Visible = false;
 
-            float stav_nadrze  = 0f; //SEM VLOŽIT PROMĚNOU, JEŽ URČUJE HLADINU VODY
+            float stav_nadrze  = this.Naplneni; //SEM VLOŽIT PROMĚNOU, JEŽ URČUJE HLADINU VODY
             obsah.Visible = true;
-             if(stav_nadrze==1)
+             if(stav_nadrze==100)
              {nadoba_ctvrt.Visible=false;
               nadoba_polovina.Visible=false;
               nadoba_trictvrte.Visible=false;
               nadoba_plna.Visible=true;
-              obsah.Text = (stav_nadrze*100).ToString()+"%";
+              obsah.Text = (stav_nadrze).ToString()+"%";
              }
-             if(stav_nadrze==0.75)
+             if(stav_nadrze==75)
              {nadoba_ctvrt.Visible=false;
               nadoba_polovina.Visible=false;
               nadoba_trictvrte.Visible=true;
               nadoba_plna.Visible=false;
-              obsah.Text = (stav_nadrze * 100).ToString() + "%";
+              obsah.Text = (stav_nadrze).ToString() + "%";
              }
-              if(stav_nadrze==0.5)
+              if(stav_nadrze==50)
              {nadoba_ctvrt.Visible=false;
               nadoba_polovina.Visible=true;
               nadoba_trictvrte.Visible=false;
               nadoba_plna.Visible=false;
-              obsah.Text = (stav_nadrze * 100).ToString() + "%";
+              obsah.Text = (stav_nadrze).ToString() + "%";
              }
-              if(stav_nadrze==0.25)
+              if(stav_nadrze==25)
              {nadoba_ctvrt.Visible=true;
               nadoba_polovina.Visible=false;
               nadoba_trictvrte.Visible=false;
               nadoba_plna.Visible=false;
-              obsah.Text = (stav_nadrze * 100).ToString() + "%";
+              obsah.Text = (stav_nadrze).ToString() + "%";
              }
               if (stav_nadrze == 0)
               {
@@ -75,7 +79,7 @@ namespace hackaton_app
                   nadoba_trictvrte.Visible = false;
                   nadoba_plna.Visible = false;
                   nadoba_prazdna.Visible = true;
-                  obsah.Text = (stav_nadrze * 100).ToString() + "%";
+                  obsah.Text = (stav_nadrze).ToString() + "%";
               }
         }
 
@@ -87,6 +91,10 @@ namespace hackaton_app
             Vlhkost = 0;
             Teplota = 0;
             Odpor = 0;
+
+            UpdateThingSpeak();
+
+            stavNádržeToolStripMenuItem_Click(null, null);
         }
 
         private void počasíToolStripMenuItem_Click(object sender, EventArgs e)
@@ -111,11 +119,11 @@ namespace hackaton_app
             button_odcerpani.Visible = false;
             button_zavlazeni.Visible = false;
 
-            float harryhoSestra = 0.55f; //JSEM PROMĚNÁ URČUJÍCÍ VLHKOST
-            float teplota = -5f; //SEM PROMĚNOU TEPLOTY
+            float harryhoSestra = this.Vlhkost; //JSEM PROMĚNÁ URČUJÍCÍ VLHKOST
+            float teplota = this.Teplota; //SEM PROMĚNOU TEPLOTY
 
             teplota_cislo.Text = teplota.ToString() + "°C";
-            vlhkost_cislo.Text = (harryhoSestra * 100).ToString() + "%";
+            vlhkost_cislo.Text = (harryhoSestra ).ToString() + "%";
 
             if (harryhoSestra > 0.51)
             {
@@ -218,13 +226,35 @@ namespace hackaton_app
 
         private void UpdateThingSpeak()
         {
-            var TSClient = new ThingSpeakWinRT.ThingSpeakClient(sslRequired: false);
+            this.Odpor = getFromTS(1);
+            this.Teplota = getFromTS(2);
+            this.Vlhkost = getFromTS(3);
+            this.Naplneni = getFromTS(4);
+        }
 
-            var feed = TSClient.ReadAllFeedsAsync("6123BHFJB7WJY5HC", 381221).Result.Feeds[0];
-            float odpor = float.Parse(feed.Field1);
-            float teplota = float.Parse(feed.Field2);
-            float humidita = float.Parse(feed.Field3);
-            float naplneni = float.Parse(feed.Field4);
+        private float getFromTS(int fid)
+        {
+            const string READKEY = "6123BHFJB7WJY5HC";
+            int channelID = 381221;
+            string strReadBase = "http://api.thingspeak.com/channels/";
+            string strReadURI = strReadBase + channelID + "/field/" + fid + "/last.txt?key=" + READKEY;
+            HttpWebRequest ThingsSpeakReq;
+            HttpWebResponse ThingsSpeakResp;
+
+            ThingsSpeakReq = (HttpWebRequest)WebRequest.Create(strReadURI);
+
+            ThingsSpeakResp = (HttpWebResponse)ThingsSpeakReq.GetResponse();
+
+            Stream dataStream = ThingsSpeakResp.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string strResponse = reader.ReadToEnd();
+
+            return float.Parse(strResponse);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            UpdateThingSpeak();
         }
     }
 }
