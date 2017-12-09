@@ -33,6 +33,7 @@ float Naplneni = 0;
 #define LED RED_LED
 #define DHTPIN 38
 #define DHTTYPE DHT22
+#define CHANNEL_ID 381221
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -120,7 +121,18 @@ void updateThingSpeak(String tsData)
     Serial.println("Connected to ThingSpeak!");
     Serial.println();
 
+    // Odesílání dat
     client.print("POST /update HTTP/1.1\n");
+    client.print("Host: api.thingspeak.com\n");
+    client.print("Connection: close\n");
+    client.print("X-THINGSPEAKAPIKEY: " + writeAPIKey + "\n");
+    client.print("Content-Type: application/x-www-form-urlencoded\n");
+    client.print("Content-Length: ");
+    client.print(tsData.length());
+    client.print("\n\n");
+    client.print(tsData);
+
+    client.print("GET /channels/" + CHANNEL_ID + "/feeds.json?api_key=<your API key>&results=2 HTTP/1.1");
     client.print("Host: api.thingspeak.com\n");
     client.print("Connection: close\n");
     client.print("X-THINGSPEAKAPIKEY: " + writeAPIKey + "\n");
