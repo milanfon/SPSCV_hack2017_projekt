@@ -12,6 +12,7 @@ namespace hackaton_app
 {
     public partial class Form1 : Form
     {
+        private float Odpor;
         private float Naplneni;
         private float Vlhkost;
         private float Teplota;
@@ -85,6 +86,7 @@ namespace hackaton_app
             Naplneni = 0;
             Vlhkost = 0;
             Teplota = 0;
+            Odpor = 0;
         }
 
         private void počasíToolStripMenuItem_Click(object sender, EventArgs e)
@@ -212,6 +214,17 @@ namespace hackaton_app
             {
                 Close();
             }
+        }
+
+        private void UpdateThingSpeak()
+        {
+            var TSClient = new ThingSpeakWinRT.ThingSpeakClient(sslRequired: false);
+
+            var feed = TSClient.ReadAllFeedsAsync("6123BHFJB7WJY5HC", 381221).Result.Feeds[0];
+            float odpor = float.Parse(feed.Field1);
+            float teplota = float.Parse(feed.Field2);
+            float humidita = float.Parse(feed.Field3);
+            float naplneni = float.Parse(feed.Field4);
         }
     }
 }
