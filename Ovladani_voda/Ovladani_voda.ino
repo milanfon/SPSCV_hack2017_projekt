@@ -1,4 +1,4 @@
-#include <dht.h>
+#include <DHT.h>
 #include <WiFi.h>
 #include <SPI.h>
 
