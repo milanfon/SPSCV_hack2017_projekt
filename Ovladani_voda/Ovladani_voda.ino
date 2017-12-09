@@ -11,8 +11,10 @@ boolean lastConnected = false;
 int failedCounter = 0;
 WiFiClient client;
 
-String a = String(22);
-String b = String(69);
+String Resistance = String(22);
+String Temperature = String(69);
+String Humidity = String(0.99f);
+String Naplneni = String(0.25f);
 
 #define LED RED_LED
 
@@ -42,7 +44,7 @@ void loop() {
   // Update ThingSpeak
   if (!client.connected() && (millis() - lastConnectionTime > updateThingSpeakInterval))
   {
-    updateThingSpeak("field1=" + a + "&field2=" + b);
+    updateThingSpeak("field1=" + Resistance + "&field2=" + Temperature + "&field3=" + Humidity + "&field4" + Naplneni);
   }
 
   // Check if WiFi needs to be restarted
